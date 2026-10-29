@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suporte Concord</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2377d11f'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7f1;--panel:#fff;--ink:#1d2419;--mute:#5d6a56;--line:#dbe4d3;--g:#6fc41a;--gd:#4b9410;--gtxt:#fff;--bad:#c0392b;--soft:#eaf5dc}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#171a15;--panel:#20241c;--ink:#eef3ea;--mute:#a1ae98;--line:#33392d;--g:#77d11f;--gd:#8be032;--gtxt:#10200a;--bad:#ff7b6b;--soft:#2a3522}}
+:root[data-theme=dark]{--bg:#171a15;--panel:#20241c;--ink:#eef3ea;--mute:#a1ae98;--line:#33392d;--g:#77d11f;--gd:#8be032;--gtxt:#10200a;--bad:#ff7b6b;--soft:#2a3522}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.5 Nunito,system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px 60px}
+header{border-bottom:1px solid var(--line);background:var(--panel)}
+header .wrap{display:flex;align-items:center;gap:12px;padding:14px 18px}
+.logo{font-weight:900;font-size:22px;letter-spacing:.5px;color:var(--g);display:flex;align-items:center;gap:10px}
+.logo i{width:30px;height:30px;border-radius:8px;background:var(--g);display:grid;place-items:center}
+.logo svg{width:20px;fill:var(--gtxt)}
+.sp{flex:1}.who{color:var(--mute);font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40vw}
+h1{font-size:30px;font-weight:900;margin:34px 0 6px}h2{font-size:19px;margin:0 0 14px}
+p.lead{color:var(--mute);margin:0 0 22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 5px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--g);outline-offset:1px}
+button{font:inherit;font-weight:800;border:0;border-radius:8px;padding:10px 18px;cursor:pointer;background:var(--g);color:var(--gtxt)}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:wait}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:6px;margin-bottom:6px}
+.tabs button{flex:1;background:transparent;color:var(--mute);border:1px solid var(--line)}
+.tabs button.on{background:var(--soft);color:var(--ink);border-color:var(--g)}
+.err{color:var(--bad);font-weight:700;margin-top:12px;min-height:1px}
+.opt{font-weight:500;color:var(--mute);font-size:13px}
+.tk{display:block;width:100%;text-align:left;background:var(--panel);color:var(--ink);border:1px solid var(--line);margin-bottom:10px;padding:14px 16px}
+.tk:hover{border-color:var(--g)}
+.tk b{display:block}.tk small{color:var(--mute);font-weight:500}
+.st{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:800;background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.st.aberto{border-color:var(--g)}.st.resolvido{background:var(--g);color:var(--gtxt)}
+.msg{padding:12px 14px;border-radius:10px;margin:10px 0;background:var(--bg);border:1px solid var(--line);white-space:pre-wrap;word-break:break-word}
+.msg.adm{background:var(--soft);border-color:var(--g)}
+.msg small{display:block;color:var(--mute);font-weight:700;margin-bottom:2px}
+dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:6px 16px}dt{color:var(--mute);font-weight:700}dd{margin:0;word-break:break-word;white-space:pre-wrap}
+.hide{display:none!important}
+.empty{color:var(--mute);text-align:center;padding:26px}
+.back{margin-top:26px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><i><svg viewBox="0 0 24 24"><path d="M20 5a17 17 0 0 0-4-1.3l-.5 1a16 16 0 0 0-5 0l-.5-1A17 17 0 0 0 4 5C1.5 9 .8 12.800 1.200 16.500A17 17 0 0 0 6.300 19l1-1.600a11 11 0 0 1-1.600-.8l.4-.3a12 12 0 0 0 10.200 0l.4.300a11 11 0 0 1-1.600.800l1 1.600a17 17 0 0 0 5.100-2.500C23.300 12 22.300 8 20 5ZM8.600 14.300c-1 0-1.800-.9-1.800-2s.8-2 1.800-2 1.800.9 1.800 2-.8 2-1.800 2Zm6.800 0c-1 0-1.800-.9-1.800-2s.8-2 1.800-2 1.800.9 1.800 2-.8 2-1.800 2Z"/></svg></i>Concord · Suporte</div>
+  <span class="sp"></span><span class="who" id="who"></span>
+  <button class="ghost hide" id="out">Sair</button>
+</div></header>
+
+<main class="wrap">
+  <!-- LOGIN -->
+  <section id="vAuth" class="hide">
+    <h1>Entre para falar com o suporte</h1>
+    <p class="lead">Use seu e-mail e senha para abrir e acompanhar tickets.</p>
+    <div class="card" style="max-width:440px">
+      <div class="tabs"><button class="on" id="tLogin">Entrar</button><button id="tReg">Criar conta</button></div>
+      <label for="em">E-mail</label><input id="em" type="email" autocomplete="email">
+      <label for="pw">Senha</label><input id="pw" type="password" autocomplete="current-password" minlength="6">
+      <div class="row" style="margin-top:18px"><button id="go">Entrar</button><button class="ghost" id="forgot">Esqueci a senha</button></div>
+      <div class="err" id="aerr" role="alert"></div>
+    </div>
+  </section>
+
+  <!-- LISTA -->
+  <section id="vList" class="hide">
+    <div class="row"><h1 id="listTitle" style="flex:1">Meus tickets</h1><button id="newBtn">Abrir ticket</button></div>
+    <div class="row hide" id="filterRow" style="margin-bottom:14px"><label for="flt" style="margin:0">Filtrar</label>
+      <select id="flt" style="width:auto"><option value="">Todos</option><option>aberto</option><option>em análise</option><option>resolvido</option><option>fechado</option></select></div>
+    <div id="tickets"></div>
+  </section>
+
+  <!-- NOVO -->
+  <section id="vNew" class="hide">
+    <h1>Abrir ticket</h1>
+    <p class="lead">Quanto mais detalhes, mais rápido a gente resolve.</p>
+    <div class="card">
+      <label for="subj">Assunto</label>
+      <select id="subj"><option value="">Selecione…</option><option value="bug">Bug</option><option value="ban">Conta banida</option><option value="hack">Bot malicioso / conta hackeada</option></select>
+      <div id="fBug" class="hide">
+        <label for="bugType">Tipo de bug</label>
+        <select id="bugType"><option value="Visual">Visual</option><option value="Servidor">De servidor</option></select>
+        <label for="bugDesc">Explicação do bug</label><textarea id="bugDesc" placeholder="O que aconteceu, onde e como reproduzir."></textarea>
+      </div>
+      <div id="fAcc" class="hide">
+        <label for="accId">ID ou nickname da conta</label><input id="accId">
+        <div id="fBan" class="hide"><label for="banReason">Razão do banimento</label><textarea id="banReason"></textarea></div>
+        <div id="fHack" class="hide"><label for="hackDo">O que a conta ou bot está fazendo? <span class="opt">(opcional)</span></label><textarea id="hackDo"></textarea></div>
+      </div>
+      <div class="row" style="margin-top:18px"><button id="send">Enviar ticket</button><button class="ghost" data-home>Cancelar</button></div>
+      <div class="err" id="nerr" role="alert"></div>
+    </div>
+  </section>
+
+  <!-- DETALHE -->
+  <section id="vTk" class="hide">
+    <h1 id="tkTitle"></h1>
+    <div class="card"><div class="row" style="margin-bottom:12px"><span class="st" id="tkSt"></span><span class="sp"></span>
+      <span id="admCtl" class="hide"><label for="stSel" style="display:inline;margin-right:6px">Status</label>
+      <select id="stSel" style="width:auto"><option>aberto</option><option>em análise</option><option>resolvido</option><option>fechado</option></select></span></div>
+      <dl id="tkInfo"></dl></div>
+    <h2>Conversa</h2><div id="msgs"></div>
+    <div class="card" id="replyBox"><label for="reply" style="margin-top:0">Sua resposta</label><textarea id="reply"></textarea>
+      <div class="row" style="margin-top:12px"><button id="sendMsg">Enviar</button></div></div>
+    <button class="ghost back" data-home>Voltar aos tickets</button>
+  </section>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, addDoc, updateDoc, onSnapshot, query, where, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyB4IPhh62Jk4PS2mVE1s3CcQyVGtqoKpcY",
+  authDomain: "support-concord.firebaseapp.com",
+  databaseURL: "https://support-concord-default-rtdb.firebaseio.com",
+  projectId: "support-concord",
+  storageBucket: "support-concord.firebasestorage.app",
+  messagingSenderId: "160714391101",
+  appId: "1:160714391101:web:8ac2489703194aa229f454",
+  measurementId: "G-DVDVRDHDFF"
+});
+try { getAnalytics(app); } catch (e) {}
+const auth = getAuth(app), db = getFirestore(app);
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LABEL = { bug: "Bug", ban: "Conta banida", hack: "Bot malicioso / conta hackeada" };
+const VIEWS = ["vAuth", "vList", "vNew", "vTk"];
+const show = v => VIEWS.forEach(x => $(x).classList.toggle("hide", x !== v));
+const fmt = t => t?.toDate ? t.toDate().toLocaleString("pt-BR") : "agora";
+
+let user = null, isAdmin = false, mode = "login", unsubList, unsubTk, unsubMsgs, tickets = [], current = null;
+
+const ERR = {
+  "auth/invalid-email": "E-mail inválido.", "auth/missing-password": "Digite a senha.",
+  "auth/weak-password": "A senha precisa ter pelo menos 6 caracteres.",
+  "auth/email-already-in-use": "Já existe uma conta com esse e-mail. Use Entrar.",
+  "auth/invalid-credential": "E-mail ou senha incorretos.", "auth/user-not-found": "E-mail ou senha incorretos.",
+  "auth/wrong-password": "E-mail ou senha incorretos.", "auth/too-many-requests": "Muitas tentativas. Aguarde um pouco e tente de novo.",
+  "auth/network-request-failed": "Sem conexão. Verifique sua internet.", "permission-denied": "Você não tem permissão para isso."
+};
+const errMsg = e => ERR[e.code] || ERR[(e.code || "").replace("firestore/", "")] || "Algo deu errado: " + (e.code || e.message);
+
+/* ---------- Auth ---------- */
+function setMode(m) {
+  mode = m;
+  $("tLogin").classList.toggle("on", m === "login"); $("tReg").classList.toggle("on", m === "reg");
+  $("go").textContent = m === "login" ? "Entrar" : "Criar conta";
+  $("pw").autocomplete = m === "login" ? "current-password" : "new-password";
+  $("aerr").textContent = "";
+}
+$("tLogin").onclick = () => setMode("login"); $("tReg").onclick = () => setMode("reg");
+$("go").onclick = async () => {
+  $("aerr").textContent = ""; $("go").disabled = true;
+  try {
+    const f = mode === "login" ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
+    await f(auth, $("em").value.trim(), $("pw").value);
+  } catch (e) { $("aerr").textContent = errMsg(e); }
+  $("go").disabled = false;
+};
+$("forgot").onclick = async () => {
+  const em = $("em").value.trim();
+  if (!em) { $("aerr").textContent = "Digite seu e-mail para receber o link de redefinição."; return; }
+  try { await sendPasswordResetEmail(auth, em); $("aerr").style.color = "var(--gd)"; $("aerr").textContent = "Link enviado. Confira seu e-mail."; }
+  catch (e) { $("aerr").style.color = ""; $("aerr").textContent = errMsg(e); }
+};
+$("pw").addEventListener("keydown", e => { if (e.key === "Enter") $("go").click(); });
+$("out").onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, async u => {
+  unsubList?.(); unsubTk?.(); unsubMsgs?.();
+  user = u; isAdmin = false;
+  $("out").classList.toggle("hide", !u); $("who").textContent = u ? u.email : "";
+  if (!u) { show("vAuth"); return; }
+  try { isAdmin = (await getDoc(doc(db, "admins", u.uid))).exists(); } catch (e) {}
+  $("who").textContent = u.email + (isAdmin ? " (admin)" : "");
+  $("listTitle").textContent = isAdmin ? "Todos os tickets" : "Meus tickets";
+  $("newBtn").classList.toggle("hide", isAdmin);
+  $("filterRow").classList.toggle("hide", !isAdmin);
+  listen(); show("vList");
+});
+
+/* ---------- Lista ---------- */
+function listen() {
+  const col = collection(db, "tickets");
+  const q = isAdmin ? query(col, orderBy("createdAt", "desc")) : query(col, where("uid", "==", user.uid));
+  unsubList = onSnapshot(q, snap => {
+    tickets = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!isAdmin) tickets.sort((a, b) => (b.createdAt?.seconds ?? 9e9) - (a.createdAt?.seconds ?? 9e9));
+    renderList();
+  }, e => { $("tickets").innerHTML = `<div class="empty">${esc(errMsg(e))}</div>`; });
+}
+function renderList() {
+  const f = $("flt").value, list = tickets.filter(t => !f || t.status === f);
+  $("tickets").innerHTML = list.length ? list.map(t => `
+    <button class="tk" data-id="${t.id}"><b>${esc(LABEL[t.type])}${t.type === "bug" ? " · " + esc(t.bugType) : ""}</b>
+    <small>${isAdmin ? esc(t.email) + " · " : ""}${fmt(t.createdAt)}</small>
+    <span class="st ${t.status === "aberto" ? "aberto" : t.status === "resolvido" ? "resolvido" : ""}" style="float:right;margin-top:-34px">${esc(t.status)}</span></button>`).join("")
+    : `<div class="empty">${isAdmin ? "Nenhum ticket com esse filtro." : "Você ainda não abriu nenhum ticket. Clique em Abrir ticket para começar."}</div>`;
+}
+$("flt").onchange = renderList;
+$("tickets").onclick = e => { const b = e.target.closest(".tk"); if (b) openTicket(b.dataset.id); };
+document.addEventListener("click", e => { if (e.target.closest("[data-home]")) { unsubTk?.(); unsubMsgs?.(); show("vList"); } });
+
+/* ---------- Novo ticket ---------- */
+$("newBtn").onclick = () => { $("nerr").textContent = ""; show("vNew"); };
+$("subj").onchange = () => {
+  const s = $("subj").value;
+  $("fBug").classList.toggle("hide", s !== "bug");
+  $("fAcc").classList.toggle("hide", s !== "ban" && s !== "hack");
+  $("fBan").classList.toggle("hide", s !== "ban");
+  $("fHack").classList.toggle("hide", s !== "hack");
+};
+$("send").onclick = async () => {
+  const s = $("subj").value, v = id => $(id).value.trim(), er = $("nerr");
+  er.textContent = "";
+  let data = { type: s };
+  if (!s) { er.textContent = "Escolha um assunto."; return; }
+  if (s === "bug") {
+    if (!v("bugDesc")) { er.textContent = "Explique o bug. Esse campo é obrigatório."; return; }
+    data = { ...data, bugType: $("bugType").value, description: v("bugDesc") };
+  } else {
+    if (!v("accId")) { er.textContent = "Informe o ID ou nickname da conta."; return; }
+    data.accountId = v("accId");
+    if (s === "ban") {
+      if (!v("banReason")) { er.textContent = "Informe a razão do banimento."; return; }
+      data.banReason = v("banReason");
+    } else data.hackActivity = v("hackDo");
+  }
+  $("send").disabled = true;
+  try {
+    const ref = await addDoc(collection(db, "tickets"), { ...data, uid: user.uid, email: user.email, status: "aberto", createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+    ["bugDesc", "accId", "banReason", "hackDo"].forEach(i => $(i).value = ""); $("subj").value = ""; $("subj").onchange();
+    openTicket(ref.id);
+  } catch (e) { er.textContent = errMsg(e); }
+  $("send").disabled = false;
+};
+
+/* ---------- Detalhe ---------- */
+function openTicket(id) {
+  unsubTk?.(); unsubMsgs?.(); current = id; show("vTk");
+  $("msgs").innerHTML = ""; $("reply").value = "";
+  unsubTk = onSnapshot(doc(db, "tickets", id), d => {
+    if (!d.exists()) return; const t = d.data();
+    $("tkTitle").textContent = LABEL[t.type] + (t.type === "bug" ? " · " + t.bugType : "");
+    $("tkSt").textContent = t.status; $("stSel").value = t.status;
+    $("admCtl").classList.toggle("hide", !isAdmin);
+    $("replyBox").classList.toggle("hide", t.status === "fechado");
+    const rows = [["Aberto por", t.email], ["Data", fmt(t.createdAt)]];
+    if (t.type === "bug") rows.push(["Explicação", t.description]);
+    else {
+      rows.push(["Conta (ID/nick)", t.accountId]);
+      if (t.type === "ban") rows.push(["Razão do banimento", t.banReason]);
+      else if (t.hackActivity) rows.push(["Atividade", t.hackActivity]);
+    }
+    $("tkInfo").innerHTML = rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+  });
+  unsubMsgs = onSnapshot(query(collection(db, "tickets", id, "messages"), orderBy("createdAt", "asc")), snap => {
+    $("msgs").innerHTML = snap.empty ? `<div class="empty">Ainda sem respostas. Um admin vai responder aqui.</div>` :
+      snap.docs.map(d => { const m = d.data(); return `<div class="msg ${m.isAdmin ? "adm" : ""}"><small>${m.isAdmin ? "Suporte Concord" : esc(m.email)} · ${fmt(m.createdAt)}</small>${esc(m.text)}</div>`; }).join("");
+  });
+}
+$("sendMsg").onclick = async () => {
+  const text = $("reply").value.trim(); if (!text) return;
+  $("sendMsg").disabled = true;
+  try {
+    await addDoc(collection(db, "tickets", current, "messages"), { uid: user.uid, email: user.email, isAdmin, text, createdAt: serverTimestamp() });
+    const patch = { updatedAt: serverTimestamp() };
+    if (isAdmin) patch.status = $("stSel").value === "aberto" ? "em análise" : $("stSel").value;
+    await updateDoc(doc(db, "tickets", current), patch);
+    $("reply").value = "";
+  } catch (e) { alert(errMsg(e)); }
+  $("sendMsg").disabled = false;
+};
+$("stSel").onchange = () => updateDoc(doc(db, "tickets", current), { status: $("stSel").value, updatedAt: serverTimestamp() }).catch(e => alert(errMsg(e)));
+</script>
+</body>
+</html>
